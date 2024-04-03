@@ -65,33 +65,41 @@ public class Scenarios {
      *       this as a non-optional decimal value using a default of 0.0.
      *  - {@code right: <your decimal type>} (required)
      */
-    static Map<String, Object> sub(String arguments) {
+    private static Map<String, Object> sub(String arguments) {
         String[] parts = arguments.split(" ");
 
-        if (parts.length != 2) {
-            throw new IllegalArgumentException("sub expects two arguments");
-        }
-
+        Optional<Double> left = Optional.empty();
         double right = 0.0;
 
-        try {
-            right = Double.parseDouble(parts[1]);
-        }
-        catch (NumberFormatException e) {
-            throw new IllegalArgumentException("sub expects numbers");
+        boolean rightFound = false;
+
+        for (int i = 0; i < parts.length; i += 2) {
+            if (i + 1 >= parts.length) {
+                throw new IllegalArgumentException("sub expects two arguments");
+            }
+
+            if (parts[i].equals("--left")) {
+                left = Optional.of(Double.parseDouble(parts[i + 1]));
+            } else if (parts[i].equals("--right")) {
+                right = Double.parseDouble(parts[i + 1]);
+                rightFound = true;
+            } else {
+                throw new IllegalArgumentException("Invalid argument format for sub");
+            }
         }
 
-        Optional<Double> left = Optional.empty();
-        if (!parts[0].isEmpty()) {
-            try {
-                left = Optional.of(Double.parseDouble(parts[0]));
-            }
-            catch (NumberFormatException e) {
-                throw new IllegalArgumentException("sub expects numbers");
-            }
+        if (!rightFound) {
+            throw new IllegalArgumentException("--right argument is required for sub");
         }
-        return Map.of("left", left, "right", right);
+
+        // Return left as Optional if it exists, otherwise return it as is
+        if(left.equals(Optional.empty())){
+            return Map.of("left", left, "right", right);
+        } else {
+            return Map.of("left", left.get(), "right", right);
+        }
     }
+
 
     /**
      * Takes one positional argument:
