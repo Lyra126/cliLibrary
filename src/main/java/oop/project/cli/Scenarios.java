@@ -40,15 +40,17 @@ public class Scenarios {
         String[] parts = arguments.split(" ");
 
         if (parts.length != 2) {
-            throw new IllegalArgumentException("add command expects two arguments: left and right");
+            throw new IllegalArgumentException("add expects two arguments");
         }
 
         int left, right;
+
         try {
             left = Integer.parseInt(parts[0]);
             right = Integer.parseInt(parts[1]);
-        } catch (NumberFormatException e) {
-            throw new IllegalArgumentException("Invalid number format in arguments");
+        }
+        catch (NumberFormatException e) {
+            throw new IllegalArgumentException("add expects a number");
         }
 
         return Map.of("left", left, "right", right);
@@ -62,9 +64,30 @@ public class Scenarios {
      *  - {@code right: <your decimal type>} (required)
      */
     static Map<String, Object> sub(String arguments) {
-        //TODO: Parse arguments and extract values.
-        Optional<Double> left = Optional.empty();
+        String[] parts = arguments.split(" ");
+
+        if (parts.length != 2) {
+            throw new IllegalArgumentException("sub expects two arguments");
+        }
+
         double right = 0.0;
+
+        try {
+            right = Double.parseDouble(parts[1]);
+        }
+        catch (NumberFormatException e) {
+            throw new IllegalArgumentException("sub expects numbers");
+        }
+
+        Optional<Double> left = Optional.empty();
+        if (!parts[0].isEmpty()) {
+            try {
+                left = Optional.of(Double.parseDouble(parts[0]));
+            }
+            catch (NumberFormatException e) {
+                throw new IllegalArgumentException("sub expects numbers");
+            }
+        }
         return Map.of("left", left, "right", right);
     }
 
@@ -73,8 +96,24 @@ public class Scenarios {
      *  - {@code number: <your integer type>} where {@code number >= 0}
      */
     static Map<String, Object> sqrt(String arguments) {
-        //TODO: Parse arguments and extract values.
-        int number = 0;
+        String[] parts = arguments.split(" ");
+
+        if (parts.length != 1) {
+            throw new IllegalArgumentException("sqrt expects one number");
+        }
+
+        int number;
+
+        try {
+            number = Integer.parseInt(parts[0]);
+            if (number < 0) {
+                throw new IllegalArgumentException("Number should be positive");
+            }
+        }
+        catch (NumberFormatException e) {
+            throw new IllegalArgumentException("sqrt expects a number");
+        }
+
         return Map.of("number", number);
     }
 
