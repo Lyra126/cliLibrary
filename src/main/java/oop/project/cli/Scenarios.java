@@ -53,6 +53,8 @@ public class Scenarios {
             throw new IllegalArgumentException("add expects a number");
         }
 
+        //TODO work on type checking
+
         return Map.of("left", left, "right", right);
     }
 
@@ -123,11 +125,23 @@ public class Scenarios {
      *     - Note: Not all projects support subcommands, but if yours does you
      *       may want to take advantage of this scenario for that.
      */
-    static Map<String, Object> calc(String arguments) {
-        //TODO: Parse arguments and extract values.
-        String subcommand = "";
+    private static Map<String, Object> calc(String arguments) {
+        arguments = arguments.trim();
+        String[] parts = arguments.split(" ");
+
+        if (parts.length != 1)
+            throw new IllegalArgumentException("Invalid number of arguments for 'calc'.");
+
+        String subcommand = parts[0];
+
+        if (!subcommand.equals("add") && !subcommand.equals("sub") && !subcommand.equals("div") && !subcommand.equals("sqrt")) {
+            throw new IllegalArgumentException("Invalid subcommand for 'calc'. Expected 'add', 'div', or 'sqrt'.");
+        }
+
+        // Return a map containing the subcommand
         return Map.of("subcommand", subcommand);
     }
+
 
     /**
      * Takes one positional argument:
