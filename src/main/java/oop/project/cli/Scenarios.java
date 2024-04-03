@@ -37,9 +37,20 @@ public class Scenarios {
      *  - {@code right: <your integer type>}
      */
     private static Map<String, Object> add(String arguments) {
-        //TODO: Parse arguments and extract values.
-        int left = 0; //or BigInteger, etc.
-        int right = 0;
+        String[] parts = arguments.split(" ");
+
+        if (parts.length != 2) {
+            throw new IllegalArgumentException("add command expects two arguments: left and right");
+        }
+
+        int left, right;
+        try {
+            left = Integer.parseInt(parts[0]);
+            right = Integer.parseInt(parts[1]);
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("Invalid number format in arguments");
+        }
+
         return Map.of("left", left, "right", right);
     }
 
