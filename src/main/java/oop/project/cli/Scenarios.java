@@ -151,8 +151,25 @@ public class Scenarios {
      *       out of the box and requires a custom type to be defined.
      */
     static Map<String, Object> date(String arguments) {
+        String[] dateParts = arguments.split("-");
+        if (dateParts.length != 3) {
+            throw new IllegalArgumentException("Invalid date format. Please provide the date in yyyy-mm-dd format.");
+        }
+        int year, month, day;
+        try {
+            year = Integer.parseInt(dateParts[0]);
+            month = Integer.parseInt(dateParts[1]);
+            day = Integer.parseInt(dateParts[2]);
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("Invalid date format. Year, month, and day must be integers.");
+        }
         //TODO: Parse arguments and extract values.
         LocalDate date = LocalDate.EPOCH;
+        try {
+            date = LocalDate.of(year, month, day);
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("Invalid date components. Please provide valid year, month, and day values.");
+        }
         return Map.of("date", date);
     }
 
