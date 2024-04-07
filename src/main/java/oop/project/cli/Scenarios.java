@@ -27,6 +27,7 @@ public class Scenarios {
             case "sqrt" -> sqrt(arguments);
             case "calc" -> calc(arguments);
             case "date" -> date(arguments);
+            case "help" -> help(arguments);
             default -> throw new IllegalArgumentException("Unknown command.");
         };
     }
@@ -185,5 +186,62 @@ public class Scenarios {
     //should have a couple from pain points at least, and likely some others
     //for notable features. This doesn't need to be exhaustive, but this is a
     //good place to test/showcase your functionality in context.
+
+
+    //help syntax:
+    /*
+    help //returns all functions syntax and examples
+    help <add/sub/sqrt/calc/date> //can only return help log of one function at a time
+    help cannot take in anything other than letters
+    also can only take in one argument at a time, else it returns too many arguments
+     */
+    static Map<String, Object> help(String argument) {
+        if(argument == ""){
+            return Map.of("subcommand", "", "syntax", "help [<subcommand>]", "example", "help add");
+        }
+        String[] functions = {"add", "sub", "sqrt", "calc", "date"};
+
+        if (!isValidHelpArgument(argument, functions)) {
+            throw new IllegalArgumentException("Invalid argument. Available functions: add, sub, sqrt, calc, date");
+        }
+        String subcommand = argument;
+        String syntax;
+        String example;
+        switch (argument) {
+            case "add":
+                syntax = "add <num1> <num2>";
+                example = "add 5 3";
+                break;
+            case "sub":
+                syntax = "sub <num1> <num2>";
+                example = "sub 8 2";
+                break;
+            case "sqrt":
+                syntax = "sqrt <number>";
+                example = "sqrt 16";
+                break;
+            case "calc":
+                syntax = "calc <expression>";
+                example = "calc (5 + 3) * 2";
+                break;
+            case "date":
+                syntax = "date";
+                example = "date";
+                break;
+            default:
+                syntax = "";
+                example = "";
+        }
+
+        return Map.of("subcommand", subcommand, "syntax", syntax, "example", example);
+    }
+
+    //helper function for help
+    static boolean isValidHelpArgument(String argument, String[] functions) {
+        for (String function : functions)
+            if (function.equals(argument))
+                return true;
+        return false;
+    }
 
 }

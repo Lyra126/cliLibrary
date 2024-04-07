@@ -113,8 +113,25 @@ public class ScenariosTests {
                 Arguments.of("Invalid", "date 20240401", null)
             );
         }
-
     }
+
+    @Nested
+    class Help {
+        @ParameterizedTest
+        @MethodSource
+        public void testHelp(String name, String command, Object expected) {
+            test(command, expected);
+        }
+
+        public static Stream<Arguments> testHelp() {
+            return Stream.of(
+                    Arguments.of("Help only", "help", Map.of("subcommand", "", "syntax", "help [<subcommand>]", "example", "help add")),
+                    Arguments.of("Help Single arg", "help add", Map.of("subcommand", "add", "syntax", "add <num1> <num2>", "example", "add 5 3")),
+                    Arguments.of("Help Multiple arg", "help add sub", null)
+            );
+        }
+    }
+
 
     private static void test(String command, Object expected) {
         if (expected != null) {

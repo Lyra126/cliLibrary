@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="oop.project.cli.ScenariosTests$Help" tests="3" skipped="0" failures="0" errors="0" timestamp="2024-04-07T21:12:15" hostname="Elite.local" time="0.089">
+  <properties/>
+  <testcase name="[1] Help only, help, {example=help add, syntax=help [&lt;subcommand&gt;], subcommand=}" classname="oop.project.cli.ScenariosTests$Help" time="0.067"/>
+  <testcase name="[2] Help Single arg, help add, {example=add 5 3, syntax=add &lt;num1&gt; &lt;num2&gt;, subcommand=add}" classname="oop.project.cli.ScenariosTests$Help" time="0.002"/>
+  <testcase name="[3] Help Multiple arg, help add sub, null" classname="oop.project.cli.ScenariosTests$Help" time="0.005"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
