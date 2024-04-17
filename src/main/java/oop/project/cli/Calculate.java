@@ -60,6 +60,7 @@ public class Calculate {
         try {
             left = Integer.parseInt(parts[0]);
             right = Integer.parseInt(parts[1]);
+
         }
         catch (NumberFormatException e) {
             throw new IllegalArgumentException("add expects a number");

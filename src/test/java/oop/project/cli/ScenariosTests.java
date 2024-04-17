@@ -107,8 +107,12 @@ public class ScenariosTests {
         public static Stream<Arguments> testHelp() {
             return Stream.of(
                     Arguments.of("Help only", "help", List.of(Map.of("subcommand", "", "syntax", "help [<subcommand>]", "example", "help add"))),
-                    Arguments.of("Help Single arg", "help add", List.of(Map.of("subcommand", "add", "syntax", "add <num1> <num2>", "example", "add 5 3"))),
-                    Arguments.of("Help Multiple arg", "help add sub", null)
+                    Arguments.of("Help Single arg (1)", "help calc add", List.of(Map.of("subcommand", "calc add", "syntax", "add <num1> <num2>", "example", "add 5 3"))),
+                    Arguments.of("Help Multiple arg", "help calc add sub", null),
+                    Arguments.of("Help Single arg (2)", "help calc sub", List.of(Map.of("subcommand", "calc sub", "syntax", "sub <num1> <num2>", "example", "sub 8 2"))),
+                    Arguments.of("Help Single arg (3)", "help calc sqrt", List.of(Map.of("subcommand", "calc sqrt", "syntax", "sqrt <number>", "example", "sqrt 16"))),
+                    Arguments.of("Help Single arg (4)", "help calc", List.of(Map.of("subcommand", "calc", "syntax", "calc <expression>", "example", "calc add"))),
+                    Arguments.of("Help Single arg (5)", "help date", List.of(Map.of("subcommand", "date", "syntax", "date <year>-<month>-<day>", "example", "date 2024-01-01")))
             );
         }
     }

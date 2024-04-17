@@ -3,6 +3,7 @@ package oop.project.cli;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 public class Help {
     //help syntax:
@@ -15,42 +16,44 @@ public class Help {
     public static List<Map<String, Object>> results = new ArrayList<>();
 
     static List<Map<String, Object>> help(String argument) {
-        if(argument == ""){
+        results.clear();
+        if(argument.equals("")){
             results.add(Map.of("subcommand", "", "syntax", "help [<subcommand>]", "example", "help add"));
+            return results;
         }
-        String[] functions = {"add", "sub", "sqrt", "calc", "date"};
+        String[] functions = {"calc add", "calc sub", "calc sqrt", "calc", "date"};
 
         if (!isValidHelpArgument(argument, functions)) {
             throw new IllegalArgumentException("Invalid argument. Available functions: add, sub, sqrt, calc, date");
         }
         String subcommand = argument;
         String syntax;
-        String example;
-        switch (argument) {
-            case "add":
+        String example = switch (argument) {
+            case "calc add" -> {
                 syntax = "add <num1> <num2>";
-                example = "add 5 3";
-                break;
-            case "sub":
+                yield "add 5 3";
+            }
+            case "calc sub" -> {
                 syntax = "sub <num1> <num2>";
-                example = "sub 8 2";
-                break;
-            case "sqrt":
+                yield "sub 8 2";
+            }
+            case "calc sqrt" -> {
                 syntax = "sqrt <number>";
-                example = "sqrt 16";
-                break;
-            case "calc":
+                yield "sqrt 16";
+            }
+            case "calc" -> {
                 syntax = "calc <expression>";
-                example = "calc (5 + 3) * 2";
-                break;
-            case "date":
-                syntax = "date";
-                example = "date";
-                break;
-            default:
+                yield "calc add";
+            }
+            case "date" -> {
+                syntax = "date <year>-<month>-<day>";
+                yield "date 2024-01-01";
+            }
+            default -> {
                 syntax = "";
-                example = "";
-        }
+                yield "";
+            }
+        };
 
         results.add(Map.of("subcommand", subcommand, "syntax", syntax, "example", example));
         return results;
